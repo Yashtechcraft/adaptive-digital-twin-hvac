@@ -1,0 +1,51 @@
+{
+  "_comment": "All parameters are ASSUMED values for a synthetic single-zone classroom (no real-building calibration). See README and manuscript Section IV.",
+  "timeline": {"dt_min": 15, "init_days": 3, "eval_days": 1},
+  "plant": {
+    "C_J_per_K": 5.0e6,
+    "UA_env_W_per_K": 150.0,
+    "k_vent_W_per_K_per_person": 3.0,
+    "q_person_W": 75.0,
+    "equip_W_occupied": 400.0,
+    "solar_aperture_m2": 2.5,
+    "solar_lag_s": 1800.0,
+    "cop_ref": 3.5,
+    "cop_ref_Tout_C": 27.0,
+    "cop_slope_per_K": 0.06,
+    "cop_min": 2.0,
+    "cop_max": 4.0,
+    "process_noise_W": 150.0,
+    "substep_s": 60.0,
+    "T_init_C": 26.0
+  },
+  "weather": {
+    "Tmean_C": 29.0, "Tmean_day_sd_C": 1.0, "amp_C": 5.0, "peak_hour": 15.0,
+    "ar_phi": 0.9, "ar_sigma_C": 0.15,
+    "G_peak_W_m2": 850.0, "cloud_mean": 0.85, "cloud_phi": 0.95, "cloud_sigma": 0.05, "cloud_min": 0.5
+  },
+  "occupancy": {"peak_people": 30.0, "day_factor_sd": 0.05},
+  "sensor": {"T_noise_sd_C": 0.1},
+  "hvac": {"P_max_kW": 4.0, "P_step_kW": 0.25, "enable_start_h": 7.0, "enable_end_h": 18.0},
+  "comfort": {"band_C": [22.0, 26.0], "tight_band_C": [23.0, 25.0]},
+  "thermostat": {"setpoint_C": 24.0, "deadband_C": 1.0, "stage1_kW": 2.0, "stage2_kW": 4.0, "stage2_offset_C": 1.5},
+  "predictive": {"control_band_C": [23.0, 25.0], "w_comfort": 20.0, "lambda_energy_per_kW": 0.3},
+  "init": {"dither_prob": 0.25},
+  "adapt": {
+    "err_clip_C": 1.0, "trace_cap_factor": 20.0,
+    "bounds": {"a": [0.90, 1.0], "b": [0.0, 0.12], "c": [0.0, 0.5], "d": [0.0, 1.0], "e": [-1.0, 0.0], "f": [-3.0, 3.0]},
+    "gated":  {"lambda_f": 0.98, "mu": 0.5, "tau_on_factor": 2.0, "tau_off_ratio": 0.75, "window": 8},
+    "always": {"lambda_f": 0.98, "mu": 0.5}
+  },
+  "scenarios": {
+    "baseline":  {"occ_mult": 1.0, "dT_out_C": 0.0},
+    "occupancy": {"occ_mult": 2.0, "dT_out_C": 0.0},
+    "outdoor":   {"occ_mult": 1.0, "dT_out_C": 5.0},
+    "combined":  {"occ_mult": 2.0, "dT_out_C": 5.0}
+  },
+  "disturbance": {
+    "occ_window_h": [12.0, 16.0],
+    "dT_out_knots_h": [11.0, 13.0, 17.0, 19.0]
+  },
+  "metric_windows_h": {"baseline": [11.0, 19.0], "occupancy": [12.0, 16.0], "outdoor": [11.0, 19.0], "combined": [11.0, 19.0]},
+  "seeds": {"evaluation": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19], "development": [1000,1001,1002,1003,1004,1005,1006,1007,1008,1009]}
+}
